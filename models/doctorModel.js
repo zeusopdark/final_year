@@ -19,6 +19,7 @@ const schema = mongoose.Schema(
       type: Number,
       required: true,
     },
+   
     isDoctor: {
       type: Boolean,
       default: false,

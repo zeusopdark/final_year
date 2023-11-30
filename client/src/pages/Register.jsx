@@ -4,10 +4,10 @@ import "../styles/register.css";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
 
 function Register() {
-  const [file, setFile] = useState("");
+  // const [file, setFile] = useState("");
+  
   const [loading, setLoading] = useState(false);
   const [formDetails, setFormDetails] = useState({
     firstname: "",
@@ -26,32 +26,32 @@ function Register() {
     });
   };
 
-  const onUpload = async (element) => {
-    setLoading(true);
-    if (element.type === "image/jpeg" || element.type === "image/png") {
-      const data = new FormData();
-      data.append("file", element);
-      data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET);
-      data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
-      fetch(process.env.REACT_APP_CLOUDINARY_BASE_URL, {
-        method: "POST",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => setFile(data.url.toString()));
-      setLoading(false);
-    } else {
-      setLoading(false);
-      toast.error("Please select an image in jpeg or png format");
-    }
-  };
+  // const onUpload = async (element) => {
+  //   setLoading(true);
+  //   if (element.type === "image/jpeg" || element.type === "image/png") {
+  //     const data = new FormData();
+  //     data.append("file", element);
+  //     data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET);
+  //     data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
+  //     fetch(process.env.REACT_APP_CLOUDINARY_BASE_URL, {
+  //       method: "POST",
+  //       body: data,
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => setFile(data.url.toString()));
+  //     setLoading(false);
+  //   } else {
+  //     setLoading(false);
+  //     toast.error("Please select an image in jpeg or png format");
+  //   }
+  // };
 
   const formSubmit = async (e) => {
     try {
       e.preventDefault();
 
       if (loading) return;
-      if (file === "") return;
+     
 
       const { firstname, lastname, email, password, confpassword } =
         formDetails;
@@ -66,15 +66,16 @@ function Register() {
       } else if (password !== confpassword) {
         return toast.error("Passwords do not match");
       }
+      const config={headers:{"Content-Type":"application/json"}}
 
       await toast.promise(
-        axios.post("/user/register", {
+        axios.post("http://localhost:5000/api/user/register", {
           firstname,
           lastname,
           email,
           password,
-          pic: file,
-        }),
+        
+        },config),
         {
           pending: "Registering user...",
           success: "User registered successfully",
@@ -118,13 +119,13 @@ function Register() {
             value={formDetails.email}
             onChange={inputChange}
           />
-          <input
+          {/* <input
             type="file"
             onChange={(e) => onUpload(e.target.files[0])}
             name="profile-pic"
             id="profile-pic"
             className="form-input"
-          />
+          /> */}
           <input
             type="password"
             name="password"

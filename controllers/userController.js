@@ -25,6 +25,7 @@ const getallusers = async (req, res) => {
 };
 
 const login = async (req, res) => {
+  console.log(process.env.JWT_SECRET);
   try {
     const emailPresent = await User.findOne({ email: req.body.email });
     if (!emailPresent) {
@@ -46,7 +47,7 @@ const login = async (req, res) => {
     );
     return res.status(201).send({ msg: "User logged in successfully", token });
   } catch (error) {
-    res.status(500).send("Unable to login user");
+    res.status(500).send("Unable to login user",error);
   }
 };
 

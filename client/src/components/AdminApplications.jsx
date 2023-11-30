@@ -8,7 +8,7 @@ import Empty from "./Empty";
 import fetchData from "../helper/apiCall";
 import "../styles/user.css";
 
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
+
 
 const AdminApplications = () => {
   const [applications, setApplications] = useState([]);
@@ -18,7 +18,7 @@ const AdminApplications = () => {
   const getAllApp = async (e) => {
     try {
       dispatch(setLoading(true));
-      const temp = await fetchData(`/doctor/getnotdoctors`);
+      const temp = await fetchData(`http://localhost:5000/api/doctor/getnotdoctors`);
       setApplications(temp);
       dispatch(setLoading(false));
     } catch (error) {}
@@ -30,7 +30,7 @@ const AdminApplications = () => {
       if (confirm) {
         await toast.promise(
           axios.put(
-            "/doctor/acceptdoctor",
+            "http://localhost:5000/api/doctor/acceptdoctor",
             { id: userId },
             {
               headers: {

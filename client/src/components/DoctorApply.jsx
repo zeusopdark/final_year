@@ -31,7 +31,7 @@ function DoctorApply() {
       }
       const { data } = await toast.promise(
         axios.post(
-          "/doctor/applyfordoctor",
+          "http://localhost:5000/api/doctor/applyfordoctor",
 
           {
             specialization,

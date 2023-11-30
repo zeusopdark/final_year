@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
+
 
 const ApplyDoctor = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const ApplyDoctor = () => {
     try {
       await toast.promise(
         axios.post(
-          "/doctor/applyfordoctor",
+          "http://localhost:5000/api/doctor/applyfordoctor",
           {
             formDetails,
           },
@@ -82,10 +82,24 @@ const ApplyDoctor = () => {
               type="number"
               name="fees"
               className="form-input"
-              placeholder="Enter your fees  (in dollars)"
+              placeholder="Enter your fees"
               value={formDetails.fees}
               onChange={inputChange}
             />
+             {/* <input
+              type="text"
+              name="Current Hospital"
+              className="form-input"
+              placeholder="Enter your hospital"
+              value={formDetails.fees}
+              onChange={inputChange}
+            /> */}
+
+
+
+
+
+
             <button
               type="submit"
               className="btn form-btn"
