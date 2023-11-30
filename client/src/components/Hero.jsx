@@ -1,5 +1,5 @@
 import React from "react";
-import image from "../images/heroimg.jpg";
+import image from "../images/healt.avif";
 import "../styles/hero.css";
 
 const Hero = () => {
@@ -11,9 +11,9 @@ const Hero = () => {
           Our Responsibility
         </h1>
         <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-          tenetur doloremque molestias repellat minus asperiores in aperiam
-          dolor, quaerat praesentium.
+        You came to the right place. Get support for stress, family issues, life balance from your home.
+
+Consulting a healthcare professional, ordering lab tests and improving your health and wellbeing, all can be done 24/7 with DocTime!
         </p>
       </div>
       <div className="hero-img">

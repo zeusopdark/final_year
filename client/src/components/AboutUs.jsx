@@ -1,5 +1,5 @@
 import React from "react";
-import image from "../images/aboutimg.jpg";
+import image from "../images/heroimg.jpg";
 
 const AboutUs = () => {
   return (
@@ -17,7 +17,7 @@ const AboutUs = () => {
             <p>
             You came to the right place. Get support for stress, family issues, life balance from your home.
 
-Consulting a healthcare professional, buying medicine, ordering lab tests and improving your health and wellbeing, all can be done 24/7 with DocTime!
+Consulting a healthcare professional, ordering lab tests and improving your health and wellbeing, all can be done 24/7 with DocTime!
             </p>
           </div>
         </div>

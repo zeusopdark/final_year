@@ -7,7 +7,7 @@ require("dotenv").config();
 const userRouter = require("./routes/userRoutes");
 const doctorRouter = require("./routes/doctorRoutes");
 const appointRouter = require("./routes/appointRoutes");
-const path = require("path");
+
 const notificationRouter = require("./routes/notificationRouter");
 
 const app = express();
@@ -19,15 +19,12 @@ app.use("/api/user", userRouter);
 app.use("/api/doctor", doctorRouter);
 app.use("/api/appointment", appointRouter);
 app.use("/api/notification", notificationRouter);
-app.use(express.static(path.join(__dirname, "./client/build")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
 mongoose.connect("mongodb+srv://ankit:zeusdark@cluster0.qbv9zzo.mongodb.net/FinalYear?retryWrites=true&w=majority");
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB')
     app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`))
+  
 });
 mongoose.connection.on('error', err => {
     console.log(err);

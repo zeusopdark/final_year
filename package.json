@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev":"node server.js"
   },
-  "author": "Avinash905",
+  "author": "FinalYr",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
