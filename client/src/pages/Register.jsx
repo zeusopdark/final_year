@@ -4,10 +4,9 @@ import "../styles/register.css";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-
 function Register() {
-  // const [file, setFile] = useState("");
-  
+  const [avatar, setAvatar] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [formDetails, setFormDetails] = useState({
     firstname: "",
@@ -26,36 +25,22 @@ function Register() {
     });
   };
 
-  // const onUpload = async (element) => {
-  //   setLoading(true);
-  //   if (element.type === "image/jpeg" || element.type === "image/png") {
-  //     const data = new FormData();
-  //     data.append("file", element);
-  //     data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET);
-  //     data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
-  //     fetch(process.env.REACT_APP_CLOUDINARY_BASE_URL, {
-  //       method: "POST",
-  //       body: data,
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => setFile(data.url.toString()));
-  //     setLoading(false);
-  //   } else {
-  //     setLoading(false);
-  //     toast.error("Please select an image in jpeg or png format");
-  //   }
-  // };
-
   const formSubmit = async (e) => {
     try {
       e.preventDefault();
 
       if (loading) return;
-     
 
       const { firstname, lastname, email, password, confpassword } =
         formDetails;
-      if (!firstname || !lastname || !email || !password || !confpassword) {
+      if (
+        !firstname ||
+        !lastname ||
+        !email ||
+        !password ||
+        !confpassword ||
+        !avatar
+      ) {
         return toast.error("Input field should not be empty");
       } else if (firstname.length < 3) {
         return toast.error("First name must be at least 3 characters long");
@@ -66,16 +51,20 @@ function Register() {
       } else if (password !== confpassword) {
         return toast.error("Passwords do not match");
       }
-      const config={headers:{"Content-Type":"application/json"}}
+      const config = { headers: { "Content-Type": "application/json" } };
 
       await toast.promise(
-        axios.post("http://localhost:5000/api/user/register", {
-          firstname,
-          lastname,
-          email,
-          password,
-        
-        },config),
+        axios.post(
+          "http://localhost:5000/api/user/register",
+          {
+            firstname,
+            lastname,
+            email,
+            password,
+            avatar,
+          },
+          config
+        ),
         {
           pending: "Registering user...",
           success: "User registered successfully",
@@ -86,15 +75,11 @@ function Register() {
       return navigate("/login");
     } catch (error) {}
   };
-
   return (
     <section className="register-section flex-center">
       <div className="register-container flex-center">
         <h2 className="form-heading">Sign Up</h2>
-        <form
-          onSubmit={formSubmit}
-          className="register-form"
-        >
+        <form onSubmit={formSubmit} className="register-form">
           <input
             type="text"
             name="firstname"
@@ -119,13 +104,20 @@ function Register() {
             value={formDetails.email}
             onChange={inputChange}
           />
-          {/* <input
+          <input
             type="file"
-            onChange={(e) => onUpload(e.target.files[0])}
-            name="profile-pic"
-            id="profile-pic"
-            className="form-input"
-          /> */}
+            name="avatar"
+            accept="image/*"
+            onChange={(e) => {
+              const reader = new FileReader();
+              reader.onload = () => {
+                if (reader.readyState === 2) {
+                  setAvatar(reader.result);
+                }
+              };
+              reader.readAsDataURL(e.target.files[0]);
+            }}
+          />
           <input
             type="password"
             name="password"
@@ -152,10 +144,7 @@ function Register() {
         </form>
         <p>
           Already a user?{" "}
-          <NavLink
-            className="login-link"
-            to={"/login"}
-          >
+          <NavLink className="login-link" to={"/login"}>
             Log in
           </NavLink>
         </p>
